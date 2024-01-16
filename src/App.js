@@ -1,7 +1,11 @@
+import Landing from './pages/Landing';
+
 function App() {
   return (
     <div className='App'>
-      <h3>JobTrackify</h3>
+      <>
+        <Landing />
+      </>
     </div>
   );
 }
