@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../features/user/userSlice';
-import { store } from '../store';
 
 const initialState = {
   name: '',
