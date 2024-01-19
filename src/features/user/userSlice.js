@@ -4,6 +4,7 @@ import customFetch from '../../utils/axios';
 import {
   addUserToLocalStorage,
   getUserToLocalStorage,
+  removeUserFromLocalStorage,
 } from '../../utils/localStorage';
 
 const initialState = {
@@ -43,6 +44,11 @@ const userSlice = createSlice({
     toggleSideBar: (state) => {
       state.isSideBarOpen = !state.isSideBarOpen;
     },
+    logoutUser: (state) => {
+      state.user = null;
+      state.isSideBarOpen = false;
+      removeUserFromLocalStorage();
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -80,5 +86,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { toggleSideBar } = userSlice.actions;
+export const { toggleSideBar, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
