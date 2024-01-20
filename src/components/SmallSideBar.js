@@ -1,9 +1,9 @@
 import Wrapper from '../assets/wrappers/SmallSidebar';
 import { FaTimes } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
 import Logo from './Logo';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleSideBar } from '../features/user/userSlice';
+import NavLinks from './NavLinks';
 
 const SmallSideBar = () => {
   const { isSideBarOpen } = useSelector((state) => state.user);
@@ -26,7 +26,7 @@ const SmallSideBar = () => {
           <header>
             <Logo />
           </header>
-          <div className='nav-links'>nav links</div>
+          <NavLinks toggleSideBar={toggle} />
         </div>
       </div>
     </Wrapper>
