@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
 import {
   addUserToLocalStorage,
-  getUserToLocalStorage,
+  getUserFromLocalStorage,
   removeUserFromLocalStorage,
 } from '../../utils/localStorage';
 import {
@@ -15,7 +15,7 @@ import {
 const initialState = {
   isLoading: false,
   isSideBarOpen: false,
-  user: getUserToLocalStorage(),
+  user: getUserFromLocalStorage(),
 };
 
 export const registerUser = createAsyncThunk(
@@ -46,10 +46,13 @@ const userSlice = createSlice({
     toggleSideBar: (state) => {
       state.isSideBarOpen = !state.isSideBarOpen;
     },
-    logoutUser: (state) => {
+    logoutUser: (state, { payload }) => {
       state.user = null;
       state.isSideBarOpen = false;
       removeUserFromLocalStorage();
+      if (payload) {
+        toast.success(payload);
+      }
     },
   },
   extraReducers: (builder) => {

@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   const logOut = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser('Logging Out...'));
   };
 
   return (
