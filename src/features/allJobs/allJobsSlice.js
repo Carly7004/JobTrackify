@@ -35,6 +35,19 @@ export const getAllJobs = createAsyncThunk(
   }
 );
 
+export const showStats = createAsyncThunk(
+  'allJobs/showStats',
+  async (_, thunkAPI) => {
+    try {
+      const response = await customFetch.get('/jobs/stats');
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const allJobsSlice = createSlice({
   name: 'allJobs',
   initialState,
@@ -44,6 +57,13 @@ const allJobsSlice = createSlice({
     },
     hideLoading: (state) => {
       state.isLoading = false;
+    },
+    handleChange: (state, { payload: { name, value } }) => {
+      //state.page = 1 later
+      state[name] = value;
+    },
+    clearFilter: (state) => {
+      return { ...state, ...initialFiltersState };
     },
   },
   extraReducers: (builder) => {
@@ -58,8 +78,21 @@ const allJobsSlice = createSlice({
       .addCase(getAllJobs.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload);
+      })
+      .addCase(showStats.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(showStats.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.stats = payload.defaultStats;
+        state.monthlyApplications = payload.monthlyApplications;
+      })
+      .addCase(showStats.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
       });
   },
 });
-export const { showLoading, hideLoading } = allJobsSlice.actions;
+export const { showLoading, hideLoading, handleChange, clearFilter } =
+  allJobsSlice.actions;
 export default allJobsSlice.reducer;
